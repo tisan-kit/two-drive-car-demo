@@ -52,8 +52,8 @@ Tisan论坛链接：[http://bbs.elecfans.com/zhuti_820_1.html](http://bbs.elecfa
 | 9  | B01 | | 2电机管脚1 | |   
 | 10 | B02 | | 2电机管脚2 | |  
 | 11 | STBY | | | 接3.3V高电平 |    
-| 11 | VM | | | 5到12V电源 |   
-| 12 | VCC | | | 5V电源 |    
+| 11 | VM | | | 5到12V直流电源 |   
+| 12 | VCC | | | 5V直流电源 |    
 | 13 | GND | GND | | 共地 |   
  
 
@@ -102,7 +102,7 @@ WebIDE上划片是电机对象，所以拖两个电机对象：
 motor_double对象实现小车前进、后退、加速的功能，由于电机驱动模块驱动的是双电机，实现该功能需要两个PWM的管脚来驱动。并根据驱动芯片的资料，在steer_wheel的外设文件中封装好前进、后退、向左、向右的配置函数，具体做法如下：  
 - 因为要用的PWM功能，需要引入驱动文件`#include "driver/pwm.h"`;  
 - 在peri_steer_wheel文件中定义和初始化配置IO口，定义转向函数（前进、后退、向左、向右）；  
-- 在peri_steer_wheel文件中声明定义了双驱车的状态，该状态只是了小车的驱动速度和方向`struct DD_CAR_STATE dd_car_state = {0,  dd_forward};`;  
+- 在peri_steer_wheel文件中声明定义了双驱车的状态，该状态指示了小车的驱动速度和方向`struct DD_CAR_STATE dd_car_state = {0,  dd_forward};`;  
 - 在motor_double对象中初始化驱动IO（PWMA和PWMB）；  
 - 在motor_double对象的设置函数中获取驱动值和方向，同时保存到*dd_car_state*变量中，并调用外设驱动函数设置电机的值；   
 - 在steer_wheel对象中调用初始化配置IO的函数；
